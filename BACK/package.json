@@ -1,20 +1,31 @@
 {
   "name": "back",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+<<<<<<< HEAD
     "start": "nodemon server.js"
+=======
+    "start": "node server.js"
+>>>>>>> 8b668198b535d62004cbd5cf27f7d88079d2f4f5
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+<<<<<<< HEAD
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.2.1",
     "nodemon": "^3.1.11",
+=======
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+>>>>>>> 8b668198b535d62004cbd5cf27f7d88079d2f4f5
     "pg": "^8.16.3"
   }
 }
