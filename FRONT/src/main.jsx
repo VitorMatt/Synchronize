@@ -6,5 +6,5 @@ import { GlobalContextProvider } from "./Context/GlobalContext.jsx";
 createRoot(document.getElementById("root")).render(
   <GlobalContextProvider>
     <RouterProvider router={router}></RouterProvider>
-  </GlobalContextProvider>,
+  </GlobalContextProvider>
 );
