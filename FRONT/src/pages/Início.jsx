@@ -1,5 +1,5 @@
 import React from 'react'
-import inicio from '../pages/CSS/inicio.css'
+import '../pages/CSS/inicio.css'
 
 function Início() {
   return (
