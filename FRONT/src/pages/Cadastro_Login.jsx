@@ -5,31 +5,17 @@ import "swiper/css/autoplay";
 import { useState } from "react";
 import PLogin from "../components/PLogin";
 import PCadastro from "../components/PCadastro";
-import "./Cadastro_Login.css";
+import "./CSS/Cadastro_Login.css";
 
 function Cadastro_Login() {
   const imagens = [
     "img_login.svg",
-    "img_login_dois.svg",
-    "img_login_tres.svg",
-    "img_login_quatro.svg",
-    "img_login_cinco.svg",
-    "img_login_seis.svg",
-    "img_login_sete.svg",
     "img_login.svg",
-    "img_login_dois.svg",
-    "img_login_tres.svg",
-    "img_login_quatro.svg",
-    "img_login_cinco.svg",
-    "img_login_seis.svg",
-    "img_login_sete.svg",
     "img_login.svg",
-    "img_login_dois.svg",
-    "img_login_tres.svg",
-    "img_login_quatro.svg",
-    "img_login_cinco.svg",
-    "img_login_seis.svg",
-    "img_login_sete.svg",
+    "img_login.svg",
+    "img_login.svg",
+    "img_login.svg",
+    "img_login.svg",
   ];
 
   const [abaAtiva, setAbaAtiva] = useState("cadastro");
@@ -37,14 +23,14 @@ function Cadastro_Login() {
   return (
     <div className="cadastro-login-container">
       <div className="cadastro-login-flex">
-        <div className="cadastro-login-slider">
+        <div className="cadastro-login-slider-wrapper">
           <Swiper
             modules={[Autoplay]}
             autoplay={{ delay: 5000, disableOnInteraction: false }}
             rewind={true}
             slidesPerView={1}
             speed={800}
-            className="cadastro-login-slider"
+            className="cadastro-login-img"
           >
             {imagens.map((src, i) => (
               <SwiperSlide className="cadastro-login-slider-slide" key={i}>
@@ -61,20 +47,15 @@ function Cadastro_Login() {
           <div className="cadastro-login-tabs-container">
             <div className="cadastro-login-tabs">
               <button
-                onClick={() => {
-                  setAbaAtiva("cadastro");
-                }}
+                onClick={() => setAbaAtiva("cadastro")}
                 className={`cadastro-login-tab-button ${
                   abaAtiva === "cadastro" ? "active" : "inactive"
                 }`}
               >
                 Cadastro
               </button>
-
               <button
-                onClick={() => {
-                  setAbaAtiva("login");
-                }}
+                onClick={() => setAbaAtiva("login")}
                 className={`cadastro-login-tab-button ${
                   abaAtiva === "login" ? "active" : "inactive"
                 }`}

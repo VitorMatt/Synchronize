@@ -1,322 +1,40 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import ky from "ky";
+import "../pages/CSS/Cadastro_Login.css";
 
 function PCadastro() {
-
-  const [valor_email_cadastro, setValor_email_cadastro] = useState("");
-  const [Erro_email_cadastro, setErro_email_cadastro] = useState(false);
-  const [mensagem_email_cadastro, setMensagem_email_cadastro] = useState("");
-
-  const [valor_senha_cadastro, setValor_senha_cadastro] = useState("");
-  const [Erro_senha_cadastro, setErro_senha_cadastro] = useState(false);
-  const [mensagem_senha_cadastro, setMensagem_senha_cadastro] = useState("");
-
-  const [valor_nome_cadastro, setValor_nome_cadastro] = useState("");
-  const [Erro_nome_cadastro, setErro_nome_cadastro] = useState(false);
-  const [mensagem_nome_cadastro, setMensagem_nome_cadastro] = useState("");
-
-  const [valor_cpf_cadastro, setValor_cpf_cadastro] = useState("");
-  const [Erro_cpf_cadastro, setErro_cpf_cadastro] = useState(false);
-  const [mensagem_cpf_cadastro, setMensagem_cpf_cadastro] = useState("");
-
-  const [valor_data_cadastro, setValor_data_cadastro] = useState("");
-  const [Erro_data_cadastro, setErro_data_cadastro] = useState(false);
-  const [mensagem_data_cadastro, setMensagem_data_cadastro] = useState("");
-
-  const [tipoInput, setTipoInput] = useState("password");
-  const [tipoIconSenha, setTipoIconSenha] = useState("icon_nao_ver.png");
-
-  const navigate = useNavigate();
-
-  const formatarCPF = (value) => {
-    value = value.replace(/\D/g, "");
-    value = value.replace(/^(\d{3})(\d)/, "$1.$2");
-    value = value.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
-    value = value.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4");
-    return value.slice(0, 14);
-  };
-
-  const formatarNome = (value) => value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ\s]/g, "");
-
-  const formatarData = (value) => {
-    value = value.replace(/\D/g, "");
-    value = value.replace(/(\d{2})(\d{2})(\d{4})/, "$1/$2/$3");
-    return value.slice(0, 10);
-  };
-
-  const alternarTipo = () => {
-    setTipoInput((prev) => (prev === "password" ? "text" : "password"));
-    setTipoIconSenha((prev) =>
-      prev === "icon_nao_ver.png" ? "icon_ver.png" : "icon_nao_ver.png"
-    );
-  };
-
-  useEffect(() => {
-    if (valor_senha_cadastro.length > 0) {
-      setMensagem_senha_cadastro("");
-      setErro_senha_cadastro(false);
-    }
-  }, [valor_senha_cadastro]);
-
-  useEffect(() => {
-    if (valor_email_cadastro.length > 0) {
-      setMensagem_email_cadastro("");
-      setErro_email_cadastro(false);
-    }
-  }, [valor_email_cadastro]);
-
-  useEffect(() => {
-    if (valor_nome_cadastro.length > 0) {
-      setMensagem_nome_cadastro("");
-      setErro_nome_cadastro(false);
-    }
-  }, [valor_nome_cadastro]);
-
-  useEffect(() => {
-    if (valor_cpf_cadastro.length > 0) {
-      setMensagem_cpf_cadastro("");
-      setErro_cpf_cadastro(false);
-    }
-  }, [valor_cpf_cadastro]);
-
-  useEffect(() => {
-    if (valor_data_cadastro.length > 0) {
-      setMensagem_data_cadastro("");
-      setErro_data_cadastro(false);
-    }
-  }, [valor_data_cadastro]);
-
-  const cadastrar = async () => {
-    let Erro = false;
-
-    // Validações locais
-    if (valor_senha_cadastro.length < 4) {
-      setMensagem_senha_cadastro("Senha incorreta!");
-      setErro_senha_cadastro(true);
-      Erro = true;
-    }
-
-    if (
-      !valor_email_cadastro.includes("@gmail.com") &&
-      !valor_email_cadastro.includes("@hotmail.com")
-    ) {
-      setMensagem_email_cadastro("Email incorreto!");
-      setErro_email_cadastro(true);
-      Erro = true;
-    }
-
-    if (valor_nome_cadastro.length < 1) {
-      setMensagem_nome_cadastro("Nome incorreto!");
-      setErro_nome_cadastro(true);
-      Erro = true;
-    }
-
-    if (valor_cpf_cadastro.length < 14) {
-      setMensagem_cpf_cadastro("CPF inválido!");
-      setErro_cpf_cadastro(true);
-      Erro = true;
-    }
-
-    if (valor_data_cadastro.length === 10) {
-      const [dia, mes, ano] = valor_data_cadastro.split("/").map(Number);
-      const nascimento = new Date(ano, mes - 1, dia);
-      const hoje = new Date();
-      let idade = hoje.getFullYear() - nascimento.getFullYear();
-      const naoFezAniversario =
-        hoje.getMonth() < nascimento.getMonth() ||
-        (hoje.getMonth() === nascimento.getMonth() &&
-          hoje.getDate() < nascimento.getDate());
-      if (naoFezAniversario) idade--;
-
-      if (idade < 18 || isNaN(nascimento.getTime())) {
-        setMensagem_data_cadastro("Você deve ser maior de 18 anos!");
-        setErro_data_cadastro(true);
-        Erro = true;
-      }
-    } else {
-      setErro_data_cadastro(true);
-      setMensagem_data_cadastro("Data inválida!");
-      Erro = true;
-    }
-
-    const dataFormatada = valor_data_cadastro.split("/").reverse().join("-");
-
-    if (Erro) return;
-
-    try {
-      const response = await ky
-        .post("http://localhost:3000/cadastro", {
-          json: {
-            nome: valor_nome_cadastro,
-            email: valor_email_cadastro,
-            senha: valor_senha_cadastro,
-            cpf: valor_cpf_cadastro,
-            data_nascimento: dataFormatada,
-          },
-          throwHttpErrors: false, 
-        })
-        .json();
-
-      if (response.erros && response.erros.length > 0) {
-        response.erros.forEach((erro) => {
-          if (erro.campo === "email") {
-            setMensagem_email_cadastro(erro.message);
-            setErro_email_cadastro(true);
-          }
-          if (erro.campo === "cpf") {
-            setMensagem_cpf_cadastro(erro.message);
-            setErro_cpf_cadastro(true);
-          }
-        });
-        return; 
-      }
-
-      alert("Cadastro realizado com sucesso!");
-      navigate("/");
-
-    } catch (error) {
-      console.error("Erro inesperado:", error);
-      alert("Erro inesperado ao cadastrar!");
-    }
-  };
-
   return (
-    <div className="flex flex-col w-full pt-12  ">
-      <div className="flex flex-col w-full justify-center items-center ">
-        <p className="w-4/6 text-[40px] ">É um prazer te receber!</p>
-        <p className="w-4/6 text-2xl pt-2 ">
-          Preencha os dados abaixo para criar sua conta
-        </p>
+    <div className="form-container">
+      <p className="form-title">É um prazer te receber!</p>
+      <p className="form-subtitle">Preencha os dados abaixo para criar sua conta</p>
+      
+      <div className="form-group">
+        <label className="form-label">Email corporativo</label>
+        <input type="email" className="form-input" placeholder="user@gmail.com" />
       </div>
-      <div className="flex flex-col w-92/100 max-h-60 justify-center items-center pl-2  overflow-y-auto">
-        <label className="pl-16 pt-94 w-5/6 text-xl" htmlFor="">
-          Nome completo
-        </label>
-        <div className=" pl-17 flex w-full pt-3 justify-center items-center ">
-          <input
-            className="w-5/6 border-2 border-[#D9D9D9]  p-2 rounded-lg focus:border-purpledark outline-none "
-            type="text"
-            placeholder="Ex: Ronaldo fernandes"
-            value={valor_nome_cadastro}
-            onChange={(e) =>
-              setValor_nome_cadastro(formatarNome(e.target.value))
-            }
-          />
-        </div>
-        <div
-          className={`text-purpledark w-4/6 pl-2 h-4 transition-opacity duration-500 ${
-            Erro_nome_cadastro ? "opacity-100" : "opacity-0 "
-          }`}
-        >
-          <p className="h-3"> {mensagem_nome_cadastro} </p>
-        </div>
-
-        <label className="pl-15 w-5/6 text-xl pt-4" htmlFor="">
-          Data Nascimento
-        </label>
-        <div className="pl-17 flex w-full pt-3 justify-center items-center ">
-          <input
-            className="w-5/6 border-2 border-[#D9D9D9]  p-2 rounded-lg focus:border-purpledark outline-none "
-            type="text"
-            placeholder="Ex: 14/02/2000"
-            value={valor_data_cadastro}
-            onChange={(e) =>
-              setValor_data_cadastro(formatarData(e.target.value))
-            }
-          />
-        </div>
-        <div
-          className={`text-purpledark w-4/6 pl-2 h-4 transition-opacity duration-500 ${
-            Erro_data_cadastro ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <p className="h-3"> {mensagem_data_cadastro} </p>
-        </div>
-        <label className="pl-15 w-5/6 text-xl pt-5" htmlFor="">
-          CPF
-        </label>
-        <div className=" pl-17 flex w-full pt-3 justify-center items-center ">
-          <input
-            className="w-5/6 border-2 border-[#D9D9D9]  p-2 rounded-lg focus:border-purpledark outline-none "
-            type="text"
-            placeholder="Ex: 123.456.789-10"
-            value={valor_cpf_cadastro}
-            onChange={(e) => setValor_cpf_cadastro(formatarCPF(e.target.value))}
-          />
-        </div>
-        <div
-          className={`text-purpledark w-4/6 pl-2 h-4 transition-opacity duration-500 ${
-            Erro_cpf_cadastro ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <p className="h-3"> {mensagem_cpf_cadastro} </p>
-        </div>
-
-        <label className="pl-15 w-5/6 text-xl pt-5" htmlFor="">
-          Endereço de e-mail
-        </label>
-        <div className=" pl-17 flex w-full pt-3 justify-center items-center ">
-          <input
-            className="w-5/6 border-2 border-[#D9D9D9]  p-2 rounded-lg focus:border-purpledark outline-none "
-            type="text"
-            placeholder="Ex: Ronaldo@gmail.com"
-            onChange={(e) => setValor_email_cadastro(e.target.value)}
-          />
-        </div>
-        <div
-          className={`text-purpledark w-4/6 pl-2 h-4 transition-opacity duration-500 ${
-            Erro_email_cadastro ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <p className="h-3"> {mensagem_email_cadastro} </p>
-        </div>
-
-        <label className="pl-15 w-5/6 text-xl pt-5" htmlFor="">
-          Senha
-        </label>
-        <div className="flex w-full pl-17 pt-3 justify-center items-center">
-          <div className="  flex w-5/6 border-2 border-[#D9D9D9]  justify-center items-center rounded-lg focus-within:border-purpledark outline-none   ">
-            <input
-              className="w-full border-gray p-2 rounded-lg outline-none "
-              type={tipoInput}
-              placeholder="Ex: 1234"
-              maxLength={8}
-              onChange={(e) => setValor_senha_cadastro(e.target.value)}
-            />
-            <img
-              className=" pr-3 w-9 h-6 cursor-pointer"
-              src={tipoIconSenha}
-              alt="Mostrar senha"
-              onClick={alternarTipo}
-            />
-          </div>
-        </div>
-
-        <div
-          className={`text-purpledark w-4/6 pl-2 h-4 transition-opacity duration-500 ${
-            Erro_senha_cadastro ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <p className="h-3"> {mensagem_senha_cadastro} </p>
-        </div>
+      
+      <div className="form-group">
+        <label className="form-label">Senha</label>
+        <input type="password" className="form-input" placeholder="12345..." />
       </div>
-      <div className="flex pt-4  w-full justify-center items-center ">
-        <div className="flex text-white w-full justify-center items-center pt-4.5">
-          <button
-            onClick={cadastrar}
-            className=" bg-purpledark w-4/6 font-bold  rounded-2xl p-2.5 cursor-pointer"
-          >
-            Cadastrar-se
-          </button>
-        </div>
+
+      <div className="form-group">
+        <label className="form-label">Confirmar senha</label>
+        <input type="password" className="form-input" placeholder="12345..." />
       </div>
-      <div className=" w-full  flex items-center justify-center pt-5 ">
-        <div className=" cursor-pointer w-4/6 flex justify-center items-center border-2 border-purpledark rounded-2xl p-1 space-x-4 text-purpledark">
-          <img src="logo_gogle.svg" alt="" />
-          <p className="font-bold">Entrar com o Google</p>
-        </div>
+      
+      <button className="form-button">Cadastrar</button>
+      <div className="divider">
+        <span>ou</span>
       </div>
+      
+      <button className="google-button">
+        <svg width="20" height="20" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        Entrar com o Google
+      </button>
     </div>
   );
 }
