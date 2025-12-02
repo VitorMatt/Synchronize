@@ -1,14 +1,16 @@
 import React from 'react'
-import Início from '../pages/CSS/Início.css'
+import inicio from '../pages/CSS/inicio.css'
 
 function Início() {
   return (
     <div className='container_maior'>
-      <div>
-
+      <div className='container1'>
+        <div className='textinho'>
+            <p>Para tornar a terapia e o apoio psicológico mais acessíveis, nós oferecemos 35 BRL de DESCONTO na sua primeira compra: JORNADA35</p>
+        </div>
       </div>
-      <div>
-        
+      <div className='container2'>
+
       </div>
     </div>
   )
