@@ -1,0 +1,76 @@
+.cadastro-login-container {
+  height: 100%;
+}
+
+.cadastro-login-flex {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.cadastro-login-slider {
+  width: 50%;
+  height: 100%;
+}
+
+.cadastro-login-slider-slide {
+  height: 100%;
+}
+
+.cadastro-login-slider-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cadastro-login-content {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cadastro-login-tabs-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.cadastro-login-tabs {
+  display: flex;
+  width: 66.666667%;
+  gap: 2rem;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.cadastro-login-tab-button {
+  padding-bottom: 0.5rem;
+  transition: all 0.3s ease;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.cadastro-login-tab-button:hover {
+  opacity: 0.8;
+}
+
+.cadastro-login-tab-button.active {
+  color: #4c1d95;
+  border-bottom: 3px solid #4c1d95;
+  font-weight: 700;
+}
+
+.cadastro-login-tab-button.inactive {
+  color: #6b7280;
+  border-bottom: 3px solid transparent;
+}
+
+.cadastro-login-components {
+  width: 100%;
+  margin-top: 2rem;
+}
