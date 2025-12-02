@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import FiltroEmpresas from "../pages/FiltroEmpresas.jsx";
 import Início from "../pages/Início.jsx";
+import Cadastro_Login from "../pages/Cadastro_Login.jsx";
 
 
 const router = createBrowserRouter([
@@ -11,6 +12,10 @@ const router = createBrowserRouter([
   {
     path: '/inicio',
     element: <Início/>
+  },
+  {
+    path: '/auth',
+    element: <Cadastro_Login />
   }
 ]);
 
