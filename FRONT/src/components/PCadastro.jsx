@@ -52,7 +52,7 @@ function PCadastro() {
         json: {
           email_corporativo: email_corporativo,
           senha: senha,
-          empresa: empresa
+          empresa: empresa,
         }
       }).json();
 
@@ -103,9 +103,26 @@ function PCadastro() {
 
     if (!message) {
 
+      set_codigo_carteirinha(await gerarCodigoUnico());
       sendUser();
     };
   };
+
+  function gerarCodigoCarteirinha() {
+    return Math.floor(1000000000 + Math.random() * 9000000000).toString();
+  }
+
+  async function gerarCodigoUnico() {
+    const users = await getUsers();
+    let codigo;
+
+    do {
+      codigo = gerarCodigoCarteirinha();
+    } while (users.find((user) => user.codigo_carteirinha === codigo));
+
+    return codigo;
+  };
+
 
   return (
     <div className="form-container">
