@@ -1,6 +1,20 @@
 import "../pages/CSS/Cadastro_Login.css";
 
 function PLogin() {
+
+  async function signIn() {
+    
+    try {
+      
+      const response = await ky.get('http://localhost:3000/login', {
+        searchParams
+      }).json();
+    } catch (error) {
+      
+      console.error(error.message);
+    };
+  };
+
   return (
     <div className="form-container">
       <p className="form-title">Bem-vindo de volta!</p>
@@ -25,7 +39,7 @@ function PLogin() {
       </div>
       
       
-      <button className="form-button">Entrar</button>
+      <button className="form-button" onClick={signIn}>Entrar</button>
       
       <button className="google-button">
         <svg width="20" height="20" viewBox="0 0 24 24">
