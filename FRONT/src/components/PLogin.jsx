@@ -11,7 +11,7 @@ function PLogin() {
         <input 
           type="email" 
           className="form-input" 
-          placeholder="ex: brenda@gmail.com" 
+          placeholder="ex: marcio.azevedo@empresa.com" 
         />
       </div>
       
@@ -25,10 +25,6 @@ function PLogin() {
       </div>
       
       <button className="form-button">Entrar</button>
-      
-      <div className="divider">
-        <span>ou</span>
-      </div>
       
       <button className="google-button">
         <svg width="20" height="20" viewBox="0 0 24 24">

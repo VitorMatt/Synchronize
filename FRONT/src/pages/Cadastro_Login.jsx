@@ -9,13 +9,11 @@ import "./CSS/Cadastro_Login.css";
 
 function Cadastro_Login() {
   const imagens = [
-    "img_login.svg",
-    "img_login.svg",
-    "img_login.svg",
-    "img_login.svg",
-    "img_login.svg",
-    "img_login.svg",
-    "img_login.svg",
+    "img_1.svg",
+    "img_2.svg",
+    "img_3.svg",
+    "img_4.svg",
+    "img_5.svg"
   ];
 
   const [abaAtiva, setAbaAtiva] = useState("cadastro");
@@ -26,7 +24,7 @@ function Cadastro_Login() {
         <div className="cadastro-login-slider-wrapper">
           <Swiper
             modules={[Autoplay]}
-            autoplay={{ delay: 5000, disableOnInteraction: false }}
+            autoplay={{ delay: 2000, disableOnInteraction: false }}
             rewind={true}
             slidesPerView={1}
             speed={800}
