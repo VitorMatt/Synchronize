@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import fotoMulher from "../assets/foto.svg";
 import "./CSS/FiltroEmpresas.css";
 import { useState } from "react";
@@ -13,7 +14,28 @@ const lista = [
 ];
 
 function FiltroEmpresas() {
-  const [selecionada, setSelecionada] = useState(null);
+  const navigate = useNavigate()
+  const [selecionada, setSelecionada] = useState({
+    index: null,
+    nome: null
+  });
+
+  const confirmar_empresa = () => {
+
+    if(selecionada.nome != null){
+
+      const empresaSelecionada = selecionada.nome;
+      localStorage.setItem('empresa', empresaSelecionada);
+      navigate('/auth')
+      }
+  }
+
+  const selecionarEmpresa = (index) => {
+    setSelecionada({
+      index: index,
+      nome: lista[index]
+    });
+  }
 
   return (
     <div className="j">
@@ -40,13 +62,13 @@ function FiltroEmpresas() {
               <div
                 key={index}
                 className={`card-empresa ${
-                  selecionada === index ? "ativa" : ""
+                  selecionada.index === index ? "ativa" : ""
                 }`}
-                onClick={() => setSelecionada(index)}
+                onClick={() => selecionarEmpresa(index)}
               >
                 <span>{empresa}</span>
                 <span className="icone">
-                  {selecionada === index ? "✔" : "+"}
+                  {selecionada.index === index ? "✔" : "+"}
                 </span>
               </div>
             ))}
@@ -54,7 +76,13 @@ function FiltroEmpresas() {
         </div>
 
         <div className="botao-div">
-          <button className="botao-detalhe">Vamos lá!</button>
+          <button 
+            className="botao-detalhe" 
+            onClick={confirmar_empresa}
+            
+          >
+            Vamos lá!
+          </button>
         </div>
       </div>
     </div>

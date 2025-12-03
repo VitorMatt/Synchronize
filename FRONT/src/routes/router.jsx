@@ -11,7 +11,7 @@ const router = createBrowserRouter([
     element: <FiltroEmpresas/>
   },
   {
-    path: '/inicio',
+    path: '/',
     element: <Início/>
   },
   {

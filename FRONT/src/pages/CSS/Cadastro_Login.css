@@ -1,20 +1,14 @@
-/* Cadastro_Login.css
-   Substituir o CSS antigo — mantive todas as classes usadas nos seus componentes React.
-*/
-
-/* Fonte (importar no index.html ou via @import se preferir) */
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
 
 :root {
-  --bg-right: #f3f6f9;       /* fundo do lado direito */
-  --orange: #FE8235;       /* cor da marca/aba ativa */
+  --bg-right: #FFFFFF;      
+  --orange: #FE8235;       
   --text-dark: #1f2937;
   --muted: #6b7280;
-  --input-border: #e6e7ea;
-  --success: #2f9b4a;       /* borda verde do input válido */
+  --input-border: #cccdcf;
+  --success: #2f9b4a;       
 }
 
-/* Reset mínimo já que seu projeto usa global */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -26,7 +20,6 @@ body, html, #root {
   font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
-/* Container principal */
 .cadastro-login-container {
   height: 100vh;
   width: 100%;
@@ -34,16 +27,14 @@ body, html, #root {
   background: #fff;
 }
 
-/* Flex 50/50 */
 .cadastro-login-flex {
   display: flex;
   width: 100%;
   height: 100%;
   align-items: stretch;
-  gap: 0;     /* remove gaps entre colunas */
+  gap: 0;   
 }
 
-/* Lado esquerdo - slider / imagens */
 .cadastro-login-slider-wrapper {
   width: 50%;
   height: 100%;
@@ -54,7 +45,6 @@ body, html, #root {
   transform: translateZ(0);
 }
 
-/* cada slide ocupa 100% sem gaps */
 .cadastro-login-slider-slide {
   width: 100% !important;
   height: 100% !important;
@@ -63,7 +53,6 @@ body, html, #root {
   display: block;
 }
 
-/* imagem cobre TODO o espaço */
 .cadastro-login-slider-img {
   width: 100%;
   height: 100%;
@@ -74,7 +63,6 @@ body, html, #root {
   min-height: 100%;
 }
 
-/* Lado direito - conteúdo */
 .cadastro-login-content {
   width: 50%;
   height: 100%;
@@ -87,27 +75,23 @@ body, html, #root {
   box-shadow: none;
 }
 
-/* Container das tabs */
 .cadastro-login-tabs-container {
   display: flex;
   width: 100%;
   max-width: 400px;
   margin: 0 auto 28px auto;
-  justify-content: center;
+  
 }
 
-/* Tabs (Cadastro | Login) */
 .cadastro-login-tabs {
   display: flex;
-  gap: 2rem;
-  width: 100%;
-  justify-content: center;
+  gap: 0.5rem;
+  width: 90%;
+  justify-content: start;
   align-items: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  padding-bottom: 16px;
 }
 
-/* Botões das tabs */
 .cadastro-login-tab-button {
   background: none;
   border: none;
@@ -148,30 +132,26 @@ body, html, #root {
   background: transparent;
 }
 
-/* Caixa do conteúdo (formulário) */
 .cadastro-login-components {
-  width: 100%;
-  max-width: 400px;
+  width: 58%;
+  
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* Título e subtítulo */
 .form-title {
-  font-size: 28px;
+  font-size: 35px;
   line-height: 1.3;
   color: var(--text-dark);
-  font-weight: 700;
-  margin-bottom: 8px;
+  font-weight: 500;
 }
 
 .form-subtitle {
   color: var(--muted);
-  font-size: 14px;
-  margin-bottom: 32px;
+  font-size: 16px;
+  margin-bottom: 25px;
 }
 
-/* Formulário */
 .form-container {
   width: 100%;
   display: flex;
@@ -186,92 +166,68 @@ body, html, #root {
   gap: 6px;
 }
 
-/* label */
 .form-label {
-  font-size: 14px;
+  font-size: 16px;
   color: #374151;
-  font-weight: 500;
+  font-weight: 600;
 }
 
-/* input padrão */
 .form-input {
   width: 100%;
   height: 46px;
   padding: 12px 16px;
-  border-radius: 8px;
+  border-radius: 12px;
   border: 1.5px solid var(--input-border);
-  background: #fff;
+  background: transparent;
   font-size: 15px;
   color: #111827;
   transition: border-color 0.18s, box-shadow 0.18s;
 }
 
-/* placeholder */
 .form-input::placeholder {
   color: #6b7280;
   opacity: 1;
 }
 
-/* focus */
 .form-input:focus {
   outline: none;
   border-color: rgba(0, 0, 0, 0.12);
   box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.02);
 }
 
-/* Estado "válido" */
 .form-input.valid {
   border-color: var(--success);
   box-shadow: 0 0 0 4px rgba(47, 155, 74, 0.06);
 }
 
-/* mensagem de alerta/observação */
 .form-alert {
   font-size: 13px;
   color: #f05a4a;
   margin-top: 4px;
 }
 
-/* botão principal (Cadastrar/Entrar) */
 .form-button {
   width: 100%;
-  height: 52px;
+  padding: 2.5%;
   background: linear-gradient(180deg, var(--orange), #f36b2a);
-  color: #fff;
+  color: #ffff;
   border: none;
   border-radius: 10px;
-  font-size: 18px;
-  font-weight: 600;
+  letter-spacing: 0.07ch;
+  font-family: "DM Sans", sans-serif;
+  font-size: 22px;
+  font-weight: 400;
   cursor: pointer;
   margin-top: 10px;
   box-shadow: 0 4px 12px rgba(254, 130, 53, 0.15);
   transition: transform 0.12s, box-shadow 0.12s;
 }
 
-.form-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(254, 130, 53, 0.2);
-}
+/* .form-button:hover {
+  background: #FFFF;
+  transition: transform 2s;
+} */
 
-/* divider 'ou' */
-.divider {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: var(--muted);
-  font-size: 14px;
-  margin: 16px 0;
-}
-
-.divider::before,
-.divider::after {
-  content: '';
-  height: 1px;
-  flex: 1;
-  background: #e6e7ea;
-}
-
-/* botão google */
 .google-button {
   width: 100%;
   height: 46px;
@@ -293,7 +249,6 @@ body, html, #root {
   background: #f9fafb;
 }
 
-/* Responsividade básica */
 @media (max-width: 1024px) {
   .form-title {
     font-size: 26px;
@@ -305,7 +260,6 @@ body, html, #root {
 }
 
 @media (max-width: 720px) {
-  /* transformar em coluna: imagem em cima, form em baixo */
   .cadastro-login-flex {
     flex-direction: column;
   }
