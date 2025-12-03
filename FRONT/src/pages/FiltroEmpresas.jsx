@@ -45,14 +45,16 @@ function FiltroEmpresas() {
                 onClick={() => setSelecionada(index)}
               >
                 <span>{empresa}</span>
-                <span className="icone">+</span>
+                <span className="icone">
+                  {selecionada === index ? "✔" : "+"}
+                </span>
               </div>
             ))}
           </div>
         </div>
 
         <div className="botao-div">
-            <button className="botao-detalhe">Vamos lá!</button>
+          <button className="botao-detalhe">Vamos lá!</button>
         </div>
       </div>
     </div>
