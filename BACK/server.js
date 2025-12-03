@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
-require('dotenv').config(); // 🔥 ADICIONE ESTA LINHA
+const { useState } = require('react');
+require('dotenv').config();
 
 const app = express();
 const pool = new Pool({
@@ -21,11 +22,11 @@ const PORT = process.env.PORT || 3000;
 
 app.post('/cadastro', async (req, res) => {
   try {
-    const {email_corporativo, senha} = req.body;
+    const {email_corporativo, senha, empresa} = req.body;
     
     const result = await pool.query(
-      'INSERT INTO colaboradores ( email, senha) VALUES ($1, $2) RETURNING *',
-      [ email_corporativo, senha]
+      'INSERT INTO colaboradores ( email, senha, empresa) VALUES ($1, $2, $3) RETURNING *',
+      [ email_corporativo, senha, empresa]
     );
 
     res.status(200).json('cadastro concluido!')
@@ -34,6 +35,31 @@ app.post('/cadastro', async (req, res) => {
     res.status(500).json({ erro: 'Erro no cadastro' });
   }
 });
+
+app.post('/login', async (req, res) => {
+
+  try {
+    const {email_usuario, senha} = req.body;
+   
+
+    const result = await pool.query(
+      'SELECT * FROM colaboradores WHERE email= $1  RETURNING *',
+      [ email_usuario]
+    );
+
+    
+    if( result.rows[0].email_corporativo == email_usuario && result.rows[0].senha == senha){
+    
+      res.status(200).json('login feito!')
+    }else{
+      res.status(400).json('senha incorreta!')
+    }
+
+  } catch (error) {
+    res.status(500).json('usuario não está cadastrado!');
+  }
+});
+
 
 app.get('/', async (req, res) => {});
 
