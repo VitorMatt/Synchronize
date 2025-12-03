@@ -38,10 +38,10 @@ app.post('/cadastro', async (req, res) => {
   }
 });
 
-app.post('/login', async (req, res) => {
+app.get('/login', async (req, res) => {
 
   try {
-    const {email_usuario, senha} = req.body;
+    const {email_usuario, senha} = req.query;
    
 
     const result = await pool.query(
