@@ -155,8 +155,10 @@ function Início() {
             </div>
             <div className='divProfissionais'>
                 <div className='divinformacoes'>
-                    <img src="" alt="" />
-                    <p>Manassés Marcelino</p>
+                    <div className='nomezinhos'>
+                        <img src={iconUsu} alt="" />
+                        <p>Manassés Marcelino</p>
+                    </div>
                 </div>
                 <div className='divcalendario'>
                     a
