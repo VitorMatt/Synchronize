@@ -74,7 +74,7 @@
 
 .divNs {
   display: flex;
-  width: 27%;
+  width: 28%;
   align-items: center;
   gap: 4%;
   font: medium;
@@ -412,4 +412,16 @@
 .divinformacoes{
     display: flex;
     flex-direction: column;
+    width: 50%;
+    border-radius: 18px;
+    background-color: #FE8235;
+}
+
+.nomezinhos{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    padding: 5%;
+    color: #4B4B4B;
 }
