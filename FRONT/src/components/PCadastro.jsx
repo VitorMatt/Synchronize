@@ -1,3 +1,4 @@
+
 import "../pages/CSS/Cadastro_Login.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
@@ -9,13 +10,14 @@ function PCadastro() {
   const [senha, set_senha] = useState('');
   const [confirmar_senha, set_confirmar_senha] = useState('');
   const [empresa, set_empresa] = useState('');
+  const [codigo_carteirinha, set_codigo_carteirinha] = useState('');
   const [message, setMessage] = useState(null);
 
   const navigate = useNavigate();
 
   useEffect(() => {
 
-    const empresaUser = JSON.parse(localStorage.getItem('empresa'));
+    const empresaUser = localStorage.getItem('empresa');
 
     if (!empresaUser) {
 
@@ -29,7 +31,7 @@ function PCadastro() {
     
     try {
       
-      const response = ky.get('http://localhost:3000/auth').json();
+      const response = await ky.get('http://localhost:3000/auth').json();
 
       if (response) {
 
@@ -48,11 +50,12 @@ function PCadastro() {
 
     try {
       
-      const response = ky.post('http://localhost:3000/cadastro', {
+      const response = await ky.post('http://localhost:3000/cadastro', {
         json: {
           email_corporativo: email_corporativo,
           senha: senha,
           empresa: empresa,
+          codigo_carteirinha: codigo_carteirinha
         }
       }).json();
 
@@ -70,7 +73,7 @@ function PCadastro() {
     };
   };
   
-  function signUp() {
+  async function signUp() {
 
     if (!email_corporativo || !senha || !confirmar_senha) {
       
@@ -88,7 +91,7 @@ function PCadastro() {
 
       setMessage('As senhas precisam ter entre 8 e 10 caracteres');
       return;
-    } else if(getUsers().find((user) => user.email_corporativo === email_corporativo)) {
+    } else if((await getUsers()).find((user) => user.email_corporativo === email_corporativo)) {
 
       setMessage('Usuário já cadastrado!');
       return
@@ -101,11 +104,10 @@ function PCadastro() {
       setMessage(null);
     };
 
-    if (!message) {
+    
 
       set_codigo_carteirinha(await gerarCodigoUnico());
       sendUser();
-    };
   };
 
   function gerarCodigoCarteirinha() {
