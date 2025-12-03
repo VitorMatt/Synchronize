@@ -22,16 +22,18 @@ const PORT = process.env.PORT || 3000;
 
 app.post('/cadastro', async (req, res) => {
   try {
-    const {email_corporativo, senha, empresa} = req.body;
+    const {email_corporativo, senha, empresa, codigo_carteirinha} = req.body;
     
     const result = await pool.query(
-      'INSERT INTO colaboradores ( email, senha, empresa) VALUES ($1, $2, $3) RETURNING *',
-      [ email_corporativo, senha, empresa]
+      'INSERT INTO colaboradores (email_corporativo, senha, empresa, codigo_carteirinha) VALUES ($1, $2, $3, $4) RETURNING *',
+      [ email_corporativo, senha, empresa, codigo_carteirinha]
     );
 
     res.status(200).json('cadastro concluido!')
     
   } catch (error) {
+    
+    console.log(error);
     res.status(500).json({ erro: 'Erro no cadastro' });
   }
 });
@@ -86,7 +88,24 @@ app.get('/rota5/detalhe/:id', async (req, res) => {});
 app.delete('/rota5/:id', async (req, res) => {});
 
 app.get('/rota6', async (req, res) => {});
-app.post('/rota6', async (req, res) => {});
+app.get('/auth', async (req, res) => {
+
+  try {
+    
+    const response = await pool.query('SELECT * FROM colaboradores');
+
+    if (response.rows.length > 0) {
+
+      res.status(200).json({ message: 'Colaboradores retornados com sucesso!', data: response.rows});
+    } else {
+
+      res.status(404).json({ message: 'Erro ao encontrar os colaboradores'});
+    }
+  } catch (error) {
+    
+    res.status(500).json({ message: 'Erro no servidor', error: error});
+  }
+});
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
