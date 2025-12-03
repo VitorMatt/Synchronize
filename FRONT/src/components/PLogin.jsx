@@ -8,15 +8,24 @@ function PLogin() {
       
       <div className="form-group">
         <label className="form-label">Email corporativo</label>
-        <input type="email" className="form-input" placeholder="brenda@gmail.com" />
+        <input 
+          type="email" 
+          className="form-input" 
+          placeholder="ex: brenda@gmail.com" 
+        />
       </div>
       
       <div className="form-group">
         <label className="form-label">Senha</label>
-        <input type="password" className="form-input" placeholder="Digite sua senha" />
+        <input 
+          type="password" 
+          className="form-input" 
+          placeholder="Digite sua senha" 
+        />
       </div>
       
       <button className="form-button">Entrar</button>
+      
       <div className="divider">
         <span>ou</span>
       </div>

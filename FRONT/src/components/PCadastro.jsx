@@ -8,20 +8,44 @@ function PCadastro() {
       
       <div className="form-group">
         <label className="form-label">Email corporativo</label>
-        <input type="email" className="form-input" placeholder="user@gmail.com" />
+        <input 
+          type="email" 
+          className="form-input" 
+          placeholder="ex: fulanodetal@gmail.com" 
+        />
       </div>
       
       <div className="form-group">
         <label className="form-label">Senha</label>
-        <input type="password" className="form-input" placeholder="12345..." />
+        <input 
+          type="password" 
+          className="form-input" 
+          placeholder="ex: Juli@r3567" 
+        />
       </div>
 
       <div className="form-group">
         <label className="form-label">Confirmar senha</label>
-        <input type="password" className="form-input" placeholder="12345..." />
+        <input 
+          type="password" 
+          className="form-input" 
+          placeholder="ex: Juli@r3567" 
+        />
+      </div>
+      
+      {/* Texto de instrução da senha */}
+      <div className="form-alert" style={{ 
+        fontSize: '13px', 
+        color: '#6b7280', 
+        marginTop: '-8px',
+        marginBottom: '8px',
+        fontWeight: '400'
+      }}>
+        A senha deve conter até 8 dígitos e pelo menos 2 caracteres especiais.
       </div>
       
       <button className="form-button">Cadastrar</button>
+      
       <div className="divider">
         <span>ou</span>
       </div>
