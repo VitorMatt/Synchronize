@@ -1,4 +1,6 @@
 import "../pages/CSS/Cadastro_Login.css";
+import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import ky from 'ky';
 
 function PCadastro() {
@@ -6,20 +8,102 @@ function PCadastro() {
   const [email_corporativo, set_email_corporativo] = useState('');
   const [senha, set_senha] = useState('');
   const [confirmar_senha, set_confirmar_senha] = useState('');
+  const [empresa, set_empresa] = useState('');
+  const [message, setMessage] = useState(null);
 
-  const sendUser = async () => {
+  const navigate = useNavigate();
 
+  useEffect(() => {
+
+    const empresaUser = JSON.parse(localStorage.getItem('empresa'));
+
+    if (!empresaUser) {
+
+      return console.log('Erro ao carregar empresa do colaborador');
+    };
+
+    set_empresa(empresaUser);
+  }, []);
+
+  async function getUsers () {
+    
     try {
       
-      const response = ky.post('http://localhost:3000/auth', {
-        json: {
-          email_corporativo: email_corporativo,
-          senha: senha
-        }
-      }).json();
+      const response = ky.get('http://localhost:3000/auth').json();
+
+      if (response) {
+
+        return response.data;
+      } else {
+
+        console.error('Usuários não encontrados!');
+      }
     } catch (error) {
       
       console.error(error.message);
+    };
+  };
+
+  async function sendUser () {
+
+    try {
+      
+      const response = ky.post('http://localhost:3000/cadastro', {
+        json: {
+          email_corporativo: email_corporativo,
+          senha: senha,
+          empresa: empresa
+        }
+      }).json();
+
+      if (response) {
+
+        console.log('Usuário cadastrado com sucesso');
+        navigate('/');
+      } else {
+
+        console.log('Erro na requisição');
+      };
+    } catch (error) {
+      
+      console.error(error.message);
+    };
+  };
+  
+  function signUp() {
+
+    if (!email_corporativo || !senha || !confirmar_senha) {
+      
+      setMessage('Preencha os campos corretamente para se cadastrar no sistema.');
+      return;
+    } else if (!email_corporativo.includes('@')) {
+
+      setMessage('Preencha o campo de email corretamente!');
+      return;
+    } else if (senha !== confirmar_senha) {
+
+      setMessage('As senhas não coincidem');
+      return;
+    } else if (senha.length < 8 || senha.length > 10) {
+
+      setMessage('As senhas precisam ter entre 8 e 10 caracteres');
+      return;
+    } else if(getUsers().find((user) => user.email_corporativo === email_corporativo)) {
+
+      setMessage('Usuário já cadastrado!');
+      return
+    } else if (!empresa) {
+
+      console.log('Selecione sua empresa!');
+      return navigate('/filtroempresas');
+    } else {
+      
+      setMessage(null);
+    };
+
+    if (!message) {
+
+      sendUser();
     };
   };
 
@@ -56,20 +140,23 @@ function PCadastro() {
           type="password" 
           className="form-input" 
           placeholder="Confirme sua senha" 
+           value={confirmar_senha}
+          onChange={(e) => { set_confirmar_senha(e.target.value) }}
         />
       </div>
       
       <div className="form-alert" style={{ 
-        fontSize: '13px', 
-        color: '#6b7280', 
+        fontSize: '15px', 
+        color: '#da2c00ff', 
         marginTop: '-8px',
         marginBottom: '8px',
-        fontWeight: '400'
+        fontWeight: '400',
+        height: '30px'
       }}>
-        A senha deve conter até 8 dígitos e pelo menos 2 caracteres especiais.
+        {message}
       </div>
       
-      <button className="form-button">Cadastrar</button>
+      <button className="form-button" onClick={signUp}>Cadastrar</button>
     </div>
   );
 }
