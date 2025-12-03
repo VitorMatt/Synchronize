@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import '../pages/CSS/inicio.css'
 import logoInicio from '../assets/logoInicio.svg'
 import iconSino from '../assets/iconSino.svg'
@@ -6,8 +6,28 @@ import iconCalen from '../assets/iconCalen.svg'
 import iconUsu from '../assets/iconUsu.svg'
 import seta from '../assets/seta.svg'
 import lupa from '../assets/lupa.svg'
+import coracao from '../assets/coracao.svg'
+import certinho from '../assets/certinho.svg'
+import logomenor from '../assets/logomenor.svg'
+import casinha from '/casinha.svg'
+import camera from '/camera.svg'
+import pessoas from '/pessoas.svg'
+import codigobarras from '../assets/codigobarras.svg'
 
 function Início() {
+
+    const [filters, setFilters] = useState({
+    etnia: "",
+    genero: ""
+    });
+
+    const handleChange = (e) => {
+    setFilters({
+        ...filters,
+        [e.target.name]: e.target.value
+    });
+    };
+
   return (
     <div className='container_maior'>
       <div className='container1'>
@@ -43,30 +63,106 @@ function Início() {
             <button className="btn-search">Buscar</button>
         </div>
         <div className="container1_3">
-            <span className="label-text">Especialistas que se declaram como..</span>
+            <div className='span'>
+                <span className="label-text">Especialistas que se declaram como..</span>
+            </div>
 
             <div className="filters">
-                <select className="filter white">
+                <select className="filterinfuncional">
                     <option>LGBTQ+</option>
                 </select>
 
-                <select className="filter white">
-                    <option>Etnia</option>
+                <select
+                    name="etnia"
+                    value={filters.etnia}
+                    onChange={handleChange}
+                    className={`filter ${filters.etnia ? "orange" : "white"}`}
+                >
+                    <option value="">Etnia</option>
+                    <option value="Branca">Branca</option>
+                    <option value="Parda">Parda</option>
+                    <option value="Preta">Preta</option>
                 </select>
 
-                <select className="filter orange">
-                    <option>Gênero</option>
+                <select
+                    name="genero"
+                    value={filters.genero}
+                    onChange={handleChange}
+                    className={`filter ${filters.genero ? "orange" : "white"}`}
+                >
+                    <option value="">Gênero</option>
+                    <option value="Feminino">Feminino</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Outro">Outro</option>
                 </select>
             </div>
 
             <div className="favorites">
                 <span>Meus favoritos</span>
-                <span className="heart">♡</span>
+                <img src={coracao} alt="" />
             </div>
         </div>
       </div>
       <div className='container2'>
+        <div className='container2_1'>
+            <p>Encontre o seu psicólogo</p>
+        </div>
+        <div className='container2_2'>
+            <div className="divCards">
+                {/* CARD 1 – MENU */}
+                <div className="card1">
+                    <div className="menuItem ativo">
+                        <img src={casinha} alt="" />
+                        <p>Início</p>
+                    </div>
 
+                    <div className="menuItem">
+                        <img src={camera} alt="" />
+                        <p>Chamada de vídeo</p>
+                    </div>
+
+                    <div className="menuItem">
+                        <img src={pessoas} alt="" />
+                        <p>Contatos</p>
+                    </div>
+                </div>
+
+                {/* Textinho verde */}
+                {/* <p className="status">Carteirinha atualizada! <img src={certinho} alt="" /></p> */}
+
+                {/* CARD 2 – CARTEIRINHA */}
+                <div className="card2">
+                    <div className="topIcon">
+                        <img src={logomenor} alt="" className='logomenor'/>
+                        <img src={iconUsu} alt="" />
+                        <h3 className="nome">Manassés Marcelino</h3>
+                    </div>
+
+                    <div className="credencialBox">
+                        <p className="credencialTitulo">Credencial Plena</p>
+                        <p className="credencialTipo">Trabalhador Comercio</p>
+                    </div>
+
+                    <div className='divtextos'>
+                        <p className="estado">Santa Catarina</p>
+                        <p className="codigo">0666–092754–0</p>
+                    </div>
+
+                    <div className="codigoBarra">
+                        <img src={codigobarras} alt="" />
+                    </div>
+                </div>
+            </div>
+            <div className='divProfissionais'>
+                <div className='divinformacoes'>
+                    <img src="" alt="" />
+                    <p>Manassés Marcelino</p>
+                </div>
+                <div className='divcalendario'>
+                    a
+                </div>
+            </div>
+        </div>
       </div>
     </div>
   )
