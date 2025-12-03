@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "../pages/CSS/Cadastro_Login.css";
 import ky from 'ky';
 
@@ -5,7 +6,7 @@ function PCadastro() {
 
   const [email_corporativo, set_email_corporativo] = useState('');
   const [senha, set_senha] = useState('');
-  const [confirmar_senha, set_confirmar_senha] = useState('');
+  const [confirmar_senha, set_confirmar_senha] = useState('')
 
   const sendUser = async () => {
 

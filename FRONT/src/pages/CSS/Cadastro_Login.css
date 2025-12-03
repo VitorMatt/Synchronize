@@ -80,7 +80,7 @@ body, html, #root {
   width: 100%;
   max-width: 400px;
   margin: 0 auto 28px auto;
-  justify-content: center;
+  
 }
 
 .cadastro-login-tabs {
@@ -133,8 +133,8 @@ body, html, #root {
 }
 
 .cadastro-login-components {
-  width: 100%;
-  max-width: 400px;
+  width: 58%;
+  
   margin: 0 auto;
   padding: 0 20px;
 }
