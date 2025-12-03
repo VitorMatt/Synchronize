@@ -55,7 +55,7 @@ function PCadastro() {
           email_corporativo: email_corporativo,
           senha: senha,
           empresa: empresa,
-          codigo_carteirinha: codigo_carteirinha
+          codigo_carteirinha: parseInt(codigo_carteirinha)
         }
       }).json();
 
