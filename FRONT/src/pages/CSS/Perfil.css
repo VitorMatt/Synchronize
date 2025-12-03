@@ -1,0 +1,9 @@
+.textinho{
+    display: flex;
+    background-color: #CCE2D9;
+    width: 100%;
+    color: #53A06E;
+    padding: 0.4%;
+    justify-content: center;
+    align-items: center;
+}
