@@ -78,13 +78,46 @@ app.post('/rota3', async (req, res) => {});
 app.get('/rota3', async (req, res) => {});
 
 app.get('/rota4', async (req, res) => {});
-app.get('/rota4/:id', async (req, res) => {});
 
-app.post('/rota5', async (req, res) => {});
-app.get('/rota5', async (req, res) => {});
-app.get('/rota5/:id', async (req, res) => {});
-app.get('/rota5/usuario/:id', async (req, res) => {});
-app.get('/rota5/detalhe/:id', async (req, res) => {});
+app.get('/carteirinha/:id', async (req, res) => {
+
+  try {
+
+    const { id } = req.params;
+
+    const response = await pool.query('SELECT codigo_carteirinha FROM colaboradores WHERE id_colaborador = $1', [id]);
+
+    if (response.rows.length > 0) {
+
+      return res.status(200).json({ message: 'Código da carteirinha retornado com sucesso com sucesso', data: response.rows[0]});
+    } else {
+
+      return res.status(404).json({ message: 'Dados não encontrados'});
+    };
+  } catch (error) {
+    
+    res.status(500).json({ message: 'Erro no servidor', error: error});
+  };
+});
+
+app.get('/profissionais', async (req, res) => {
+
+  try {
+    
+    const response = await pool.query('SELECT * FROM profissionais');
+
+    if (response.rows.length > 0) {
+
+      res.status(200).json({ message: 'Profissionais retornados com sucesso!', data: response.rows});
+    } else {
+
+      res.status(404).json({ message: 'Erro ao encontrar os profissionais'});
+    };
+  } catch (error) {
+    
+    res.status(500).json({ message: 'Erro no servidor', error: error});
+  };
+});
 
 app.put('/perfil/:id', async (req, res) => {
 
@@ -141,11 +174,11 @@ app.get('/auth', async (req, res) => {
     } else {
 
       res.status(404).json({ message: 'Erro ao encontrar os colaboradores'});
-    }
+    };
   } catch (error) {
     
     res.status(500).json({ message: 'Erro no servidor', error: error});
-  }
+  };
 });
 
 app.listen(PORT, () => {

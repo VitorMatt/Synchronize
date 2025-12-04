@@ -108,7 +108,7 @@
 
 
 .botao-detalhe {
-  width: 65%;
+  width: 61%;
   padding: 2%;
   text-align: center;
   background-color: #fe8235;
@@ -129,10 +129,37 @@
 .botao-div {
   margin-top: 5%;
   display: flex;
-  justify-content: center;
+  flex-direction: column; 
+  align-items: center;  
+  position: relative;
+  height: 90px;   
+  width: 100%;
 }
+
 
 
 .card-empresa.ativa span:first-child {
   color: #3d9d67;
+}
+
+.erro-validacao {
+  width: 100%;
+  height: 28px;
+  text-align: center;
+  color: #ff4f4f;
+  font-size: 18px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  visibility: hidden;
+
+  margin: 0;       /* <-- ISSO resolve de vez */
+  padding: 0;      /* segurança */
+}
+
+
+.erro-validacao.ativo {
+  visibility: visible;     /* aparece sem mudar tamanho */
 }
