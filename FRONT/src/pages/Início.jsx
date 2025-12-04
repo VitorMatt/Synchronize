@@ -14,6 +14,7 @@ import camera from '/camera.svg'
 import pessoas from '/pessoas.svg'
 import codigobarras from '../assets/codigobarras.svg'
 import ChatUI from '../components/ChatUI'
+import estrelas from '../assets/estrelas.svg'
 
 function Início() {
 
@@ -156,14 +157,75 @@ function Início() {
                 </div>
             </div>
             <div className='divProfissionais'>
-                <div className='divinformacoes'>
-                    <div className='nomezinhos'>
-                        <img src={iconUsu} alt="" />
-                        <p>Manassés Marcelino</p>
+                <div className='divprof'>
+                    <div className='divinformacoes'>
+                        <div className='nomezinhos'>
+                            <img src={iconUsu} alt="" />
+                            <div className='nomestre'>
+                                <p>Manassés Marcelino</p>
+                                <img src={estrelas} alt="" />
+                            </div>
+                        </div>
+                        <div className='crpfav'>
+                            <p>CRP 08/29038</p>
+                            <button>Favoritar <img src={coracao} alt="" /></button>
+                        </div>
+                        <div className='sobre'>
+                            <p className='sobretitulo'>Sobre mim</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                Totam earum adipisci cupiditate, alias modi nam illo assumenda, 
+                                ipsa facilis quis, dolorum magni consequatur? Exercitationem, dolores! 
+                                Necessitatibus beatae eveniet quia reiciendis?</p>
+                        </div>
+                        <div className='infofic'>
+                            <div className='divinfo1'>
+                                <p className='titulomaior'>759 Consultas</p>
+                                <p>Realizadas</p>
+                            </div>
+                            <div className='divinfo2'>
+                                <p className='titulomaior'>5 anos, e 3 meses</p>
+                                <p>Na synchronize</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='divcalendario'>
+                        a
                     </div>
                 </div>
-                <div className='divcalendario'>
-                    a
+                <div className='divprof'>
+                    <div className='divinformacoes'>
+                        <div className='nomezinhos'>
+                            <img src={iconUsu} alt="" />
+                            <div className='nomestre'>
+                                <p>Manassés Marcelino</p>
+                                <img src={estrelas} alt="" />
+                            </div>
+                        </div>
+                        <div className='crpfav'>
+                            <p>CRP 08/29038</p>
+                            <button>Favoritar <img src={coracao} alt="" /></button>
+                        </div>
+                        <div className='sobre'>
+                            <p className='sobretitulo'>Sobre mim</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                Totam earum adipisci cupiditate, alias modi nam illo assumenda, 
+                                ipsa facilis quis, dolorum magni consequatur? Exercitationem, dolores! 
+                                Necessitatibus beatae eveniet quia reiciendis?</p>
+                        </div>
+                        <div className='infofic'>
+                            <div className='divinfo1'>
+                                <p className='titulomaior'>759 Consultas</p>
+                                <p>Realizadas</p>
+                            </div>
+                            <div className='divinfo2'>
+                                <p className='titulomaior'>5 anos, e 3 meses</p>
+                                <p>Na synchronize</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='divcalendario'>
+                        a
+                    </div>
                 </div>
             </div>
         </div>
