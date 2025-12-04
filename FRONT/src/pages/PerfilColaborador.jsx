@@ -11,9 +11,109 @@ import videoIcon from "../assets/video.svg";
 import emergencyIcon from "../assets/emergencia.svg";
 import sair from "../assets/sair.svg";
 import editar from "../assets/editar.svg";
-import footer from "../assets/Footer.svg"
+import footer from "../assets/Footer.svg";
+import ky from 'ky';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function PerfilColaborador() {
+
+  const [email_corporativo, set_email_corporativo] = useState('');
+  const [senha, set_senha] = useState('');
+  const [confirmar_senha, set_confirmar_senha] = useState('');
+  const [codigo_carteirinha, set_codigo_carteirinha] = useState('');
+  const [empresa, set_empresa] = useState('');
+  const [message, set_message] = useState(null);
+
+  const navigate = useNavigate();
+  const id = localStorage.getItem('id_user');
+
+  async function getUserData () {
+    
+    try {
+      
+      const response = await ky.get(`http://localhost:3000/perfil/${id}`).json();
+
+      if (response.status !== 404) {
+
+        const data = response.data;
+        set_email_corporativo(data.email_corporativo);
+        set_senha(data.senha);
+        set_empresa(data.empresa);
+        set_codigo_carteirinha(data.codigo_carteirinha);
+        return data;
+      } else {
+
+        return console.log(`Erro ao encontrar dados com o usuário id ${id}`);
+      };
+    } catch (error) {
+      
+      return console.error(error.message);
+    };
+  };
+
+  async function updateUserPassword () {
+    
+    try {
+      
+      const response = await ky.put(`http://localhost:3000/perfil/${id}`, {
+        searchParams: {
+          senha: senha
+        }
+      }).json();
+
+      if (response.status !== 404) {
+
+        set_message('Senha alterada com sucesso');
+        await getUserData();
+        return console.log('Senha alterada com sucesso!');
+      } else {
+
+        return console.log(`Erro ao encontrar dados com o usuário id ${id}`);
+      };
+    } catch (error) {
+      
+      return console.error(error.message);
+    };
+  };
+
+  async function updatePassword () {
+    
+    if (!senha || !confirmar_senha) {
+
+      set_message('Preeencha os campos antes de confirmar');
+      return;
+    } else if (senha !== confirmar_senha) {
+
+      set_message('As senhas não coincidem');
+      return;
+    } else if (senha.length < 8 || senha.length > 10) {
+
+      set_message('Sua senha deve ter entre 8 e 10 caracteres');
+      return;
+    } else if (senha === (await getUserData()).senha) {
+
+      set_message('A sua nova senha não pode ser igual à anterior');
+      return;
+    } else {
+
+      set_message(null);
+    };
+
+    await updateUserPassword();
+  };
+
+  function logOut () {
+
+    localStorage.removeItem('id_user');
+    navigate('/');
+  };
+
+  useEffect(() => {
+
+    getUserData();
+  }, []);
+
   return (
     <div>
       <div className="textinho">
@@ -36,7 +136,7 @@ function PerfilColaborador() {
         <div className="usuario-container">
           <img src={users} alt="Usuário" className="usuario-icone" />
           <div className="usuario-info">
-            <span className="usuario-nome">Olá, Manassés!</span>
+            <span className="usuario-nome">Olá, {email_corporativo.split(' ')[0]}!</span>
           </div>
         </div>
         <div className="acoes-container">
@@ -57,14 +157,14 @@ function PerfilColaborador() {
           <div className="Perfil">
             <img className="logoMini" src={miniLogo} alt="" />
             <img className="user-icon-info" src={users} alt="" />
-            <p>Manasses Marcelino</p>
+            <p>{email_corporativo.split('.')[0]}</p>
             <div className="Credencial">
               <strong>Credencial Plena</strong>
               <p className="tagP">Trabalhador Comercial</p>
             </div>
             <div className="Cidade-info">
               <p>Santa Catarina</p>
-              <p>0666-092754-0</p>
+              <p>{codigo_carteirinha}</p>
               <img className="codBarras-cod" src={barras} alt="" />
             </div>
           </div>
@@ -98,27 +198,48 @@ function PerfilColaborador() {
               <div className="inputs-lado-a-lado">
                 <div className="campo">
                   <p className="">Senha</p>
-                  <input placeholder="Ex:12345678.." className="inpu-dupla" type="password" />
+                  <input placeholder="Ex:12345678.." className="inpu-dupla" type="password"
+                  value={senha}
+                  onChange={(e) => set_senha(e.target.value)}
+                  />
                 </div>
                 <div className="campo">
                   <p>Confirmar senha</p>
-                  <input placeholder="Ex:12345678.." className="inpu-dupla" type="password" />
+                  <input placeholder="Ex:12345678.." className="inpu-dupla" type="password"
+                  value={confirmar_senha}
+                  onChange={(e) => set_confirmar_senha(e.target.value)}
+                  />
                 </div>
               </div>
 
               <div className="inputsSozinhos">
                 <div className="input1">
-                  <p >E-mail</p> <input  placeholder="seunome.empresa@gmail.com" className="inpu-sozinho" type="text" />
+                  <p >E-mail</p> <input  placeholder="seunome.empresa@gmail.com" className="inpu-sozinho" type="text"
+                  value={email_corporativo}
+                  disabled
+                  />
                 </div>
                 <div>
-                  <p >Empresa</p> <input  placeholder="Softplan LTDA" className="inpu-sozinho1" type="text" />
+                  <p >Empresa</p> <input  placeholder="Softplan LTDA" className="inpu-sozinho1" type="text"
+                  value={empresa}
+                  disabled
+                  />
                 </div>
               </div>
             </div>
 
+            <div className="form-alert" style={{ 
+              fontSize: '15px', 
+              color: '#da2c00ff', 
+              marginTop: '8px',
+              fontWeight: '400',
+              height: '30px'
+            }}>
+              {message}
+            </div>
             <div className="botões-dados">
-              <button className="botaoSair"><img className="imgsair" src={sair} alt="" /> Sair</button>
-              <button className="botaoEditar"><img className="imgEditar" src={editar} alt="" /> Editar </button>
+              <button onClick={logOut} className="botaoSair"><img className="imgsair" src={sair} alt=""/> Sair</button>
+              <button onClick={updatePassword} className="botaoEditar"><img className="imgEditar" src={editar} alt=""/> Editar </button>
             </div>
           </div>
         </div>

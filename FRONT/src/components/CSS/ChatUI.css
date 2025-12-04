@@ -151,14 +151,13 @@
   position: fixed;
   bottom: 30px;
   right: 30px;
-  width: 65px;
-  height: 65px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, .15);
   z-index: 998;
   transition: transform 0.3s ease;
 }

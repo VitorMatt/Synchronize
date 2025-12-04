@@ -4,6 +4,7 @@ import userIcon from "../assets/users.svg";
 import sendIcon from "../assets/send.svg";
 import pattern from "../assets/pattern.svg";
 import chatButton from "../assets/chatbutton.svg";
+import serena from '../assets/serena.svg';
 
 export default function ChatUI() {
   const [isOpen, setIsOpen] = useState(false);
@@ -68,14 +69,14 @@ export default function ChatUI() {
     <>
       {/* Bolha flutuante */}
       <div className="chat-bubble-button" onClick={() => setIsOpen(!isOpen)}>
-        <img src={chatButton} />
+        <img src={serena} />
       </div>
 
       {/* Chat */}
       <div className={`chat-wrapper floating ${isOpen ? "open" : "closed"}`}>
         <div className="chat-header">
           <div className="header-icon">
-            <img src={userIcon} />
+            <img src={serena} />
           </div>
           <span>Serena — AI</span>
         </div>
@@ -92,7 +93,7 @@ export default function ChatUI() {
 
               {msg.user_id !== USER_ID && (
                 <div className="user-badge">
-                  <img src={userIcon} />
+                  <img src={serena} />
                 </div>
               )}
 

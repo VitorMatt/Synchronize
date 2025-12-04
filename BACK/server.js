@@ -85,14 +85,44 @@ app.get('/rota5', async (req, res) => {});
 app.get('/rota5/:id', async (req, res) => {});
 app.get('/rota5/usuario/:id', async (req, res) => {});
 app.get('/rota5/detalhe/:id', async (req, res) => {});
-app.delete('/rota5/:id', async (req, res) => {});
 
-app.get('/rota6', async (req, res) => {
+app.put('/perfil/:id', async (req, res) => {
 
   try {
 
-    const response = 
-    
+    const { id } = req.params;
+    const { senha } = req.query;
+
+    const response = await pool.query('UPDATE colaboradores SET senha=$1 WHERE id_colaborador = $2', [senha, id]);
+
+    if (response.rows.length > 0) {
+
+      return res.status(200).json({ message: 'Senha alterada com sucesso!' });
+    } else {
+
+      return res.status(404).json({ message: 'Não foi possível alterar a senha - usuário não encontrado no banco'});
+    };
+  } catch (error) {
+
+    res.status(500).json({ message: 'Erro no servidor', error: error});    
+  };
+});
+
+app.get('/perfil/:id', async (req, res) => {
+
+  try {
+
+    const { id } = req.params;
+
+    const response = await pool.query('SELECT * FROM colaboradores WHERE id_colaborador = $1', [id]);
+
+    if (response.rows.length > 0) {
+
+      return res.status(200).json({ message: 'Dados retornados com sucesso', data: response.rows});
+    } else {
+
+      return res.status(404).json({ message: 'Dados não encontrados'});
+    };
   } catch (error) {
     
     res.status(500).json({ message: 'Erro no servidor', error: error});
