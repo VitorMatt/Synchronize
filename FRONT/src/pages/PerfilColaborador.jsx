@@ -27,6 +27,7 @@ function PerfilColaborador() {
   const [codigo_carteirinha, set_codigo_carteirinha] = useState('');
   const [empresa, set_empresa] = useState('');
   const [message, set_message] = useState(null);
+  
 
   const navigate = useNavigate();
   const id = localStorage.getItem('id_user');
@@ -110,7 +111,11 @@ function PerfilColaborador() {
 
     localStorage.removeItem('id_user');
     navigate('/');
+    
   };
+  function goToInicio() {
+  navigate("/profissionais");
+}
 
   useEffect(() => {
 
@@ -175,7 +180,7 @@ function PerfilColaborador() {
 
         <div className="info-container">
           <div className="funcoes">
-            <div className="funcoes-detalhe">
+            <div className="funcoes-detalhe" onClick={goToInicio}>
               <div className="icone-duplo">
                 <img src={home} alt="" className="icon normal" />
                 <img src={homeLaranja} alt="" className="icon hover" />
