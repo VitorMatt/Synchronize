@@ -12,6 +12,9 @@ import emergencyIcon from "../assets/emergencia.svg";
 import sair from "../assets/sair.svg";
 import editar from "../assets/editar.svg";
 import footer from "../assets/Footer.svg";
+import homeLaranja from "../assets/home.svg";
+import videoLaranja from "../assets/videoLaranja.svg";
+import emergencyLaranja from "../assets/usersLaranja.svg";
 import ky from 'ky';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -28,10 +31,10 @@ function PerfilColaborador() {
   const navigate = useNavigate();
   const id = localStorage.getItem('id_user');
 
-  async function getUserData () {
-    
+  async function getUserData() {
+
     try {
-      
+
       const response = await ky.get(`http://localhost:3000/perfil/${id}`).json();
 
       if (response.status !== 404) {
@@ -47,15 +50,15 @@ function PerfilColaborador() {
         return console.log(`Erro ao encontrar dados com o usuário id ${id}`);
       };
     } catch (error) {
-      
+
       return console.error(error.message);
     };
   };
 
-  async function updateUserPassword () {
-    
+  async function updateUserPassword() {
+
     try {
-      
+
       const response = await ky.put(`http://localhost:3000/perfil/${id}`, {
         searchParams: {
           senha: senha
@@ -72,13 +75,13 @@ function PerfilColaborador() {
         return console.log(`Erro ao encontrar dados com o usuário id ${id}`);
       };
     } catch (error) {
-      
+
       return console.error(error.message);
     };
   };
 
-  async function updatePassword () {
-    
+  async function updatePassword() {
+
     if (!senha || !confirmar_senha) {
 
       set_message('Preeencha os campos antes de confirmar');
@@ -103,7 +106,7 @@ function PerfilColaborador() {
     await updateUserPassword();
   };
 
-  function logOut () {
+  function logOut() {
 
     localStorage.removeItem('id_user');
     navigate('/');
@@ -173,17 +176,28 @@ function PerfilColaborador() {
         <div className="info-container">
           <div className="funcoes">
             <div className="funcoes-detalhe">
-              <img className="casinhaa" src={home} alt="" />
+              <div className="icone-duplo">
+                <img src={home} alt="" className="icon normal" />
+                <img src={homeLaranja} alt="" className="icon hover" />
+              </div>
               <p>Início</p>
             </div>
             <div className="funcoes-detalhe">
-              <img src={videoIcon} alt="" />
+              <div className="icone-duplo">
+                <img src={videoIcon} alt="" className="icon normal" />
+                <img src={videoLaranja} alt="" className="icon hover" />
+              </div>
               <p>Video Chamada</p>
             </div>
+
             <div className="funcoes-detalhe">
-              <img src={emergencyIcon} alt="" />
-              <p>Emergencia</p>
+              <div className="icone-duplo">
+                <img src={emergencyIcon} alt="" className="icon normal" />
+                <img  src={emergencyLaranja} alt="" className="icon hover" />
+              </div>
+              <p>Contatos</p>
             </div>
+
           </div>
         </div>
 
@@ -199,38 +213,38 @@ function PerfilColaborador() {
                 <div className="campo">
                   <p className="">Senha</p>
                   <input placeholder="Ex:12345678.." className="inpu-dupla" type="password"
-                  value={senha}
-                  onChange={(e) => set_senha(e.target.value)}
+                    value={senha}
+                    onChange={(e) => set_senha(e.target.value)}
                   />
                 </div>
                 <div className="campo">
                   <p>Confirmar senha</p>
                   <input placeholder="Ex:12345678.." className="inpu-dupla" type="password"
-                  value={confirmar_senha}
-                  onChange={(e) => set_confirmar_senha(e.target.value)}
+                    value={confirmar_senha}
+                    onChange={(e) => set_confirmar_senha(e.target.value)}
                   />
                 </div>
               </div>
 
               <div className="inputsSozinhos">
                 <div className="input1">
-                  <p >E-mail</p> <input  placeholder="seunome.empresa@gmail.com" className="inpu-sozinho" type="text"
-                  value={email_corporativo}
-                  disabled
+                  <p >E-mail</p> <input placeholder="seunome.empresa@gmail.com" className="inpu-sozinho" type="text"
+                    value={email_corporativo}
+                    disabled
                   />
                 </div>
                 <div>
-                  <p >Empresa</p> <input  placeholder="Softplan LTDA" className="inpu-sozinho1" type="text"
-                  value={empresa}
-                  disabled
+                  <p >Empresa</p> <input placeholder="Softplan LTDA" className="inpu-sozinho1" type="text"
+                    value={empresa}
+                    disabled
                   />
                 </div>
               </div>
             </div>
 
-            <div className="form-alert" style={{ 
-              fontSize: '15px', 
-              color: '#da2c00ff', 
+            <div className="form-alert" style={{
+              fontSize: '15px',
+              color: '#da2c00ff',
               marginTop: '8px',
               fontWeight: '400',
               height: '30px'
@@ -238,8 +252,8 @@ function PerfilColaborador() {
               {message}
             </div>
             <div className="botões-dados">
-              <button onClick={logOut} className="botaoSair"><img className="imgsair" src={sair} alt=""/> Sair</button>
-              <button onClick={updatePassword} className="botaoEditar"><img className="imgEditar" src={editar} alt=""/> Editar </button>
+              <button onClick={logOut} className="botaoSair"><img className="imgsair" src={sair} alt="" /> Sair</button>
+              <button onClick={updatePassword} className="botaoEditar"><img className="imgEditar" src={editar} alt="" /> Editar </button>
             </div>
           </div>
         </div>
