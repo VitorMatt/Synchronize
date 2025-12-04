@@ -46,7 +46,7 @@ app.get('/login', async (req, res) => {
 
     const result = await pool.query(
       'SELECT * FROM colaboradores WHERE email= $1  RETURNING *',
-      [ email_usuario]
+      [email_usuario]
     );
 
     
@@ -87,7 +87,18 @@ app.get('/rota5/usuario/:id', async (req, res) => {});
 app.get('/rota5/detalhe/:id', async (req, res) => {});
 app.delete('/rota5/:id', async (req, res) => {});
 
-app.get('/rota6', async (req, res) => {});
+app.get('/rota6', async (req, res) => {
+
+  try {
+
+    const response = 
+    
+  } catch (error) {
+    
+    res.status(500).json({ message: 'Erro no servidor', error: error});
+  };
+});
+
 app.get('/auth', async (req, res) => {
 
   try {

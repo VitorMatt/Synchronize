@@ -1,17 +1,50 @@
+import { useState } from "react";
 import "../pages/CSS/Cadastro_Login.css";
+import { useNavigate } from "react-router-dom";
 
 function PLogin() {
 
+  const [email_usuario, set_email_usuario] = useState('');
+  const [senha, set_senha] = useState('');
+  const [message, set_message] = useState(null);
+
+  const navigate = useNavigate();
+
   async function signIn() {
     
+    if (!email_usuario || senha) {
+
+      set_message('Preencha todos os campos para realizar seu acesso');
+      return;
+    };
+
     try {
       
       const response = await ky.get('http://localhost:3000/login', {
-        searchParams
+        searchParams: {
+          email_usuario: email_usuario,
+          senha: senha
+        }
       }).json();
+
+
+      if (response.status === 404) {
+
+        set_message('Senha incorreta, digite novamente.');
+        return;
+      };
+
+      if (response) {
+
+        console.log('Usuário autenticado com sucesso!');
+        localStorage.setItem('id_user', response.data.id_colaborador);
+        return navigate('/profissionais');
+      };
+
     } catch (error) {
       
       console.error(error.message);
+      set_message('Usuário não cadastrado ou email incorreto');
     };
   };
 
@@ -25,7 +58,9 @@ function PLogin() {
         <input 
           type="email" 
           className="form-input" 
-          placeholder="ex: marcio.azevedo@empresa.com" 
+          placeholder="ex: marcio.azevedo@empresa.com"
+          value={email_usuario}
+          onChange={(e) => set_email_usuario(e.target.value) } 
         />
       </div>
       
@@ -34,11 +69,22 @@ function PLogin() {
         <input 
           type="password" 
           className="form-input" 
-          placeholder="Digite sua senha" 
+          placeholder="Digite sua senha"
+          value={senha}
+          onChange={(e) => set_senha(e.target.value) }
         />
       </div>
       
-      
+        <div className="form-alert" style={{ 
+        fontSize: '15px', 
+        color: '#da2c00ff', 
+        marginTop: '-8px',
+        marginBottom: '8px',
+        fontWeight: '400',
+        height: '30px'
+      }}>
+        {message}
+      </div>
       <button className="form-button" onClick={signIn}>Entrar</button>
       
       <button className="google-button">

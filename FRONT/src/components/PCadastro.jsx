@@ -11,7 +11,7 @@ function PCadastro() {
   const [confirmar_senha, set_confirmar_senha] = useState('');
   const [empresa, set_empresa] = useState('');
   const [codigo_carteirinha, set_codigo_carteirinha] = useState('');
-  const [message, setMessage] = useState(null);
+  const [message, set_message] = useState(null);
 
   const navigate = useNavigate();
 
@@ -62,7 +62,8 @@ function PCadastro() {
       if (response) {
 
         console.log('Usuário cadastrado com sucesso');
-        navigate('/');
+        localStorage.setItem('id_user', response.data.id_colaborador);
+        return navigate('/profissionais');
       } else {
 
         console.log('Erro na requisição');
@@ -77,31 +78,31 @@ function PCadastro() {
 
     if (!email_corporativo || !senha || !confirmar_senha) {
       
-      setMessage('Preencha os campos corretamente para se cadastrar no sistema.');
+      set_message('Preencha os campos corretamente para se cadastrar no sistema.');
       return;
     } else if (!email_corporativo.includes('@')) {
 
-      setMessage('Preencha o campo de email corretamente!');
+      set_message('Preencha o campo de email corretamente!');
       return;
     } else if (senha !== confirmar_senha) {
 
-      setMessage('As senhas não coincidem');
+      set_message('As senhas não coincidem');
       return;
     } else if (senha.length < 8 || senha.length > 10) {
 
-      setMessage('As senhas precisam ter entre 8 e 10 caracteres');
+      set_message('As senhas precisam ter entre 8 e 10 caracteres');
       return;
     } else if((await getUsers()).find((user) => user.email_corporativo === email_corporativo)) {
 
-      setMessage('Usuário já cadastrado!');
+      set_message('Usuário já cadastrado!');
       return
     } else if (!empresa) {
 
       console.log('Selecione sua empresa!');
-      return navigate('/filtroempresas');
+      return navigate('/');
     } else {
       
-      setMessage(null);
+      set_message(null);
     };
 
     

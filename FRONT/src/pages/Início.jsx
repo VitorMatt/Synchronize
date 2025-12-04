@@ -7,12 +7,13 @@ import iconUsu from '../assets/iconUsu.svg'
 import seta from '../assets/seta.svg'
 import lupa from '../assets/lupa.svg'
 import coracao from '../assets/coracao.svg'
-import certinho from '../assets/certinho.svg'
+// import certinho from '../assets/certinho.svg'
 import logomenor from '../assets/logomenor.svg'
 import casinha from '/casinha.svg'
 import camera from '/camera.svg'
 import pessoas from '/pessoas.svg'
 import codigobarras from '../assets/codigobarras.svg'
+import ChatUI from '../components/ChatUI'
 
 function Início() {
 
@@ -30,6 +31,7 @@ function Início() {
 
   return (
     <div className='container_maior'>
+        <ChatUI />
       <div className='container1'>
         <div className='textinho'>
             <p>Para tornar a terapia e o apoio psicológico mais acessíveis, nós oferecemos 35 BRL de DESCONTO na sua primeira compra: JORNADA35</p>
