@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../pages/CSS/Cadastro_Login.css";
 import { useNavigate } from "react-router-dom";
+import ky from 'ky';
 
 function PLogin() {
 
@@ -12,7 +13,7 @@ function PLogin() {
 
   async function signIn() {
     
-    if (!email_usuario || senha) {
+    if (!email_usuario || !senha) {
 
       set_message('Preencha todos os campos para realizar seu acesso');
       return;

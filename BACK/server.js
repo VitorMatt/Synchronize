@@ -45,14 +45,14 @@ app.get('/login', async (req, res) => {
    
 
     const result = await pool.query(
-      'SELECT * FROM colaboradores WHERE email= $1  RETURNING *',
+      'SELECT * FROM colaboradores WHERE email_corporativo = $1',
       [email_usuario]
     );
 
     
     if( result.rows[0].email_corporativo == email_usuario && result.rows[0].senha == senha){
     
-      res.status(200).json('login feito!')
+      res.status(200).json({message:"usuario autenticado com sucesso", data: result.rows[0]})
     }else{
       res.status(400).json('senha incorreta!')
     }
