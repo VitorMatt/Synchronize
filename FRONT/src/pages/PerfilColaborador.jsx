@@ -13,7 +13,7 @@ import sair from "../assets/sair.svg";
 import editar from "../assets/editar.svg";
 import footer from "../assets/Footer.svg";
 import homeLaranja from "../assets/home.svg";
-import videoLaranja from "../assets/videoLaranja.svg";
+import videoLaranja from "../assets/video.svg";
 import emergencyLaranja from "../assets/usersLaranja.svg";
 import ky from 'ky';
 import { useEffect, useState } from "react";
