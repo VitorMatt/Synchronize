@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/VitorMatt/SYNCHRONIZE/issues"
   },
-  "homepage": "https://github.com/VitorMatt/SYNCHRONIZE#readme"
+  "homepage": "https://github.com/VitorMatt/SYNCHRONIZE#readme",
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
 }
