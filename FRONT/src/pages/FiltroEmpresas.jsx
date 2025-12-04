@@ -3,6 +3,7 @@ import fotoMulher from "../assets/foto.svg";
 import "./CSS/FiltroEmpresas.css";
 import { useState } from "react";
 
+
 const lista = [
   "Softplan planejamento de sistemas",
   "Dígitro Tecnologia",
@@ -14,28 +15,35 @@ const lista = [
 ];
 
 function FiltroEmpresas() {
+
+  const [erro, setErro] = useState("");
+
   const navigate = useNavigate()
   const [selecionada, setSelecionada] = useState({
     index: null,
     nome: null
   });
 
-  const confirmar_empresa = () => {
-
-    if(selecionada.nome != null){
-
-      const empresaSelecionada = selecionada.nome;
-      localStorage.setItem('empresa', empresaSelecionada);
-      navigate('/auth')
-      }
+const confirmar_empresa = () => {
+  if (selecionada.nome == null) {
+    setErro("Selecione uma empresa antes de continuar.");
+    return;
   }
 
-  const selecionarEmpresa = (index) => {
-    setSelecionada({
-      index: index,
-      nome: lista[index]
-    });
-  }
+  setErro(""); // limpa erro
+  localStorage.setItem("empresa", selecionada.nome);
+  navigate("/auth");
+};
+
+
+const selecionarEmpresa = (index) => {
+  setSelecionada({
+    index: index,
+    nome: lista[index],
+  });
+  setErro(""); 
+};
+
 
   return (
     <div className="j">
@@ -75,15 +83,19 @@ function FiltroEmpresas() {
           </div>
         </div>
 
-        <div className="botao-div">
-          <button 
-            className="botao-detalhe" 
-            onClick={confirmar_empresa}
-            
-          >
-            Vamos lá!
-          </button>
-        </div>
+<div className="botao-div">
+  <div className={`erro-validacao ${erro ? "ativo" : ""}`}>
+    {erro}
+  </div>
+
+  <button 
+    className="botao-detalhe" 
+    onClick={confirmar_empresa}
+  >
+    Vamos lá!
+  </button>
+</div>
+
       </div>
     </div>
   );
